@@ -17,4 +17,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <!-- Strings related to Evoy feed -->
+    <string name="follow">Seguir</string>
+    <string name="unfollow">Dejar de seguir</string>
+    <string name="myFeed">Mis eventos</string>
+    <string name="allFeed">Explorar</string>
+    <string name="myProfile">Mi Perfil</string>
 </resources>
