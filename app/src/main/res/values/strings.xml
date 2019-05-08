@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Evoy</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="user_field_hint">Usuario</string>
+    <string name="pass_field_hint">Contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="register">Registrarme</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
