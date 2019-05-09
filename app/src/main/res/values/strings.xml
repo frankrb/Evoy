@@ -19,4 +19,16 @@
     </string>
     <string name="error_form">Introduzca los datos correctamente</string>
     <string name="contrasena">Contraseña</string>
+    <!-- Strings related to Evoy feed -->
+    <string name="follow">Seguir</string>
+    <string name="unfollow">Dejar de seguir</string>
+    <string name="myFeed">Mis eventos</string>
+    <string name="allFeed">Explorar</string>
+    <string name="myProfile">Mi Perfil</string>
+    <string name="followers">Seguidores:</string>
+
+    <string name="profile_username">Usuario:</string>
+    <string name="profile_name">Nombre:</string>
+    <string name="profile_surname">Apellido:</string>
+    <string name="profile_email">E-mail:</string>
 </resources>

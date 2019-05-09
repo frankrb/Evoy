@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/myFeed" />
+    <item
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/allFeed" />
+    <item
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="@string/myProfile" />
+</menu>

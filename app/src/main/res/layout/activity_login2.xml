@@ -12,40 +12,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="48dp"
         android:text="@string/app_name"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="143dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="143dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/login"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/registro"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="148dp"
-        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/register"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -58,14 +60,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/web_hi_res_512" />
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <EditText
         android:id="@+id/usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Usuario"
         android:inputType="textPersonName"

@@ -26,6 +26,11 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+        }
+
         setContentView(R.layout.activity_login2);
 
         user = findViewById(R.id.usuario);
@@ -36,7 +41,7 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Login.this,Evoy.class);
+                Intent i = new Intent(Login.this, BottomNavActivity.class);
                 try {
                     if(login(user.getText().toString().trim(),pass.getText().toString().trim())){
                         guardarpreferencias(user.getText().toString().trim(),pass.getText().toString().trim());
