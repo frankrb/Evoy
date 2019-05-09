@@ -58,7 +58,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         HttpsURLConnection urlConnection = null;
         switch(operacion) {
             case "login":
-                direccion = "https://134.209.235.115/framos001/WEB/php/login.php";
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/login.php";
                 break;
             case "updateUsuarioDetalles":
                 direccion = "https://134.209.235.115/framos001/WEB/php/updateUsuarioDetalles.php";
@@ -85,7 +85,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 direccion = "https://134.209.235.115/framos001/WEB/php/insertarPeso.php";
                 break;
             case "insertarUsuario":
-                direccion = "https://134.209.235.115/framos001/WEB/php/insertarUsuario.php";
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/insertarUsuario.php";
                 break;
             case "insertarToken":
                 direccion = "https://134.209.235.115/framos001/WEB/php/insertarToken.php";
@@ -113,7 +113,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
 
             if(!operacion.equals("saveImg")) {
                 //parámetros que le pasamos al php
-                 parametros = "param1=" + usuario + "&param2=" + contrasena + "&param3=" + ejercicio + "&param4=" + peso + "&param5=" + altura + "&param6=" + fechaNac + "&param7=" + sexo + "&nombre=" + nombre + "&apellidos=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
+                 parametros = "user=" + usuario + "&password=" + contrasena  + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
             }else{
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("param1", usuario).appendQueryParameter("foto",foto).appendQueryParameter("titulo",titulo);
@@ -159,7 +159,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         }
 
 
-        public conexionBDWebService(Context cont, String oper, String usr, String nom, String apell, String em, String contra){
+        public conexionBDWebService(Context cont, String oper, String usr, String nom, String apell, String em, String contra, String birth){
         context=cont;
         operacion=oper;
         usuario=usr;
@@ -167,6 +167,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         apellidos=apell;
         email=em;
         contrasena=contra;
+        fechaNac = birth;
         }
         public conexionBDWebService(Context cont, String oper, String usr, String param){
             context=cont;

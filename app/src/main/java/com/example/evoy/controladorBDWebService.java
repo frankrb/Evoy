@@ -25,12 +25,15 @@ public class controladorBDWebService {
     }
     //devuelve true si los datos del usuario son correctos
     public boolean login(Context cont, String oper, String usr, String contra) throws IOException, ParseException, ExecutionException, InterruptedException {
-        boolean sePuede=false;
+        boolean sePuede = false;
+
         JSONObject json = new conexionBDWebService(cont, oper, usr, contra).execute().get();
 
         String user = (String) json.get("usuario");
         if(user!=null){
+
             sePuede=true;
+
         }
         return sePuede;
     }
@@ -118,9 +121,9 @@ public class controladorBDWebService {
     }
 
     //inserta un nuevo usuario con los datos proporcionados
-    public boolean insertarUsuario(Context applicationContext, String insertarUsuario, String usuario, String nombre, String apellidos, String email, String contra) throws ExecutionException, InterruptedException {
+    public boolean insertarUsuario(Context applicationContext, String insertarUsuario, String usuario, String nombre, String apellidos, String email, String contra, String fecha) throws ExecutionException, InterruptedException {
         boolean correcto=false;
-        JSONObject json = new conexionBDWebService(applicationContext, insertarUsuario,usuario,nombre,apellidos,email,contra).execute().get();
+        JSONObject json = new conexionBDWebService(applicationContext, insertarUsuario,usuario,nombre,apellidos,email,contra,fecha).execute().get();
 
         String res = (String) json.get("respuesta");
 
