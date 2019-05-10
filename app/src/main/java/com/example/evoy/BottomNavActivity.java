@@ -20,9 +20,11 @@ public class BottomNavActivity extends AppCompatActivity {
                     return true;
                 case R.id.allFeed:
                     //mTextMessage.setText(R.string.title_dashboard);//TODO crear Fragment para allfeed e incluir la llamada
+
                     return true;
                 case R.id.myProfile:
                     //mTextMessage.setText(R.string.title_notifications);//TODO crear Fragment para Profile e incluir la llamada
+                    loadFragment(new Perfil());
                     return true;
             }
             return false;

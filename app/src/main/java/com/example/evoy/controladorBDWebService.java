@@ -51,9 +51,7 @@ public class controladorBDWebService {
     }
     //devuelve un json con los datos del usuario
     public JSONObject getDatos(Context cont, String oper, String usr) throws ExecutionException, InterruptedException {
-        boolean existen=true;
         JSONObject json = new conexionBDWebService(cont, oper, usr).execute().get();
-
         return json;
     }
     //devuelve true si se ha realizado correctamente la petición

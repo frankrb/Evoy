@@ -38,6 +38,19 @@ public class Login extends AppCompatActivity {
         login = findViewById(R.id.login);
         register = findViewById(R.id.registro);
 
+        try {
+            cargarPreferencias();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,14 +100,21 @@ public class Login extends AppCompatActivity {
         editor.commit();
 
     }
-    //este método es como hacer logout
-    private void eliminarPreferencias(){
-        SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.clear();
-        editor.commit();
 
+
+    private void cargarPreferencias() throws InterruptedException, ExecutionException, ParseException, IOException {
+        SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+
+        String user = sharedpreferences.getString("user","");
+        String pass = sharedpreferences.getString("password","");
+        if(user!="" && controladorBDWebService.getInstance().login(this,"login",user,pass)){
+            //usuario.setText(user);
+            Intent i = new Intent(Login.this,BottomNavActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
+
 
     private boolean login(String user, String pass) throws InterruptedException, ExecutionException, ParseException, IOException {
         boolean correcto;

@@ -76,7 +76,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 direccion = "https://134.209.235.115/framos001/WEB/php/insertarPesoInicial.php";
                 break;
             case "getDatos":
-                direccion = "https://134.209.235.115/framos001/WEB/php/getDatos.php";
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/getDatos.php";
                 break;
             case "getPesos":
                 direccion = "https://134.209.235.115/framos001/WEB/php/getPesos.php";
