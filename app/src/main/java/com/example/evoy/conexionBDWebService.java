@@ -33,6 +33,12 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
     String token="";
     String foto="";
     String titulo="";
+    String eName = "";
+    String eDescription ="";
+    String eLocation = "";
+    String eDate = "";
+
+
 
     public conexionBDWebService(Context cont, String tok) {
         context=cont;
@@ -72,8 +78,8 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             case "existenDatos":
                 direccion = "https://134.209.235.115/framos001/WEB/php/existenDatos.php";
                 break;
-            case "insertarPesoInicial":
-                direccion = "https://134.209.235.115/framos001/WEB/php/insertarPesoInicial.php";
+            case "insertarEvento":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/insertarEvento.php";
                 break;
             case "getDatos":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/getDatos.php";
@@ -104,19 +110,19 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         try {
             //establece una conexion HTTPS
             urlConnection = GeneradorConexionesSeguras.getInstance().crearConexionSegura(context, direccion);
-            if(!operacion.equals("saveImg")) {
+            if(!operacion.equals("insertarEvento")) {
                 urlConnection.setConnectTimeout(5000);
                 urlConnection.setReadTimeout(5000);
             }
             //inicializamos los parametros de la petición
             String parametros ="";
 
-            if(!operacion.equals("saveImg")) {
+            if(!operacion.equals("insertarEvento")) {
                 //parámetros que le pasamos al php
                  parametros = "user=" + usuario + "&password=" + contrasena  + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
             }else{
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("param1", usuario).appendQueryParameter("foto",foto).appendQueryParameter("titulo",titulo);
+                        .appendQueryParameter("iduser", usuario).appendQueryParameter("image",foto).appendQueryParameter("name",eName).appendQueryParameter("details",eDescription).appendQueryParameter("event_date",eDate);
                  parametros = builder.build().getEncodedQuery();
             }
 
@@ -164,10 +170,15 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         operacion=oper;
         usuario=usr;
         nombre=nom;
+        eName=nom;
         apellidos=apell;
+        eDescription=apell;
         email=em;
+        eLocation=em;
         contrasena=contra;
+        eDate = contra;
         fechaNac = birth;
+        foto=birth;
         }
         public conexionBDWebService(Context cont, String oper, String usr, String param){
             context=cont;

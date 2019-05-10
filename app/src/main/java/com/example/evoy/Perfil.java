@@ -108,7 +108,8 @@ public class Perfil extends Fragment {
         addEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getContext(),AddNewEvent.class);
+                startActivity(i);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

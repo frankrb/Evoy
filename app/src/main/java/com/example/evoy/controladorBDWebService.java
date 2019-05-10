@@ -146,4 +146,16 @@ public class controladorBDWebService {
         String res = (String) json.get("respuesta");
         Toast.makeText(applicationContext, "*******RESPUESTAS: \n" + res + "\n**********", Toast.LENGTH_SHORT).show();
     }
+
+    public boolean insertarEvento(Context context, String insertarEvento, String user, String nombre, String descripcion, String coordenadas, String horaTimestamp, String imagen64) throws ExecutionException, InterruptedException {
+        boolean correcto=false;
+        JSONObject json = new conexionBDWebService(context, insertarEvento,user,nombre,descripcion,coordenadas,horaTimestamp,imagen64).execute().get();
+
+        String res = (String) json.get("respuesta");
+
+        if(res.equals("correcto")){
+            correcto=true;
+        }
+        return correcto;
+    }
 }
