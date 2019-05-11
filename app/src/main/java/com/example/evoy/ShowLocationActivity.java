@@ -1,8 +1,9 @@
 package com.example.evoy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,14 +12,30 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GetLocationActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ShowLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    double latitude;
+    double longitude;
+    String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_location);
+        Intent intencion = getIntent();
+        if (intencion.hasExtra("latitude") && intencion.hasExtra("longitude") && intencion.hasExtra("location")) {
+
+            latitude = Double.parseDouble(intencion.getStringExtra("latitude"));
+            longitude = Double.parseDouble(intencion.getStringExtra("longitude"));
+            location = intencion.getStringExtra("location");
+
+        } else {
+            Log.i("Maps", "Need you to pass all 3 extras there brother.");
+            //finish();
+            latitude = 0.0;
+            longitude = 0.0;
+            location = "Ha habido un error";
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -39,22 +56,9 @@ public class GetLocationActivity extends FragmentActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(latLng));
-                String lat = String.valueOf(latLng.latitude);
-                String lon = String.valueOf(latLng.longitude);
-                String location = "Latitud: " + lat + " Longitud: " + lon;
-                Toast toast = Toast.makeText(getApplicationContext(), location, Toast.LENGTH_LONG);
-                toast.show();
-
-            }
-        });
+        // Add a marker in given location and move the camera to that area
+        LatLng myLoc = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(myLoc).title(location));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLoc));
     }
 }

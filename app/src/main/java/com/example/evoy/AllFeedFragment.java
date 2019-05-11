@@ -1,5 +1,7 @@
 package com.example.evoy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -7,20 +9,28 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyFeedFragment.OnFragmentInteractionListener} interface
+ * {@link AllFeedFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyFeedFragment#newInstance} factory method to
+ * Use the {@link AllFeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyFeedFragment extends Fragment {
+public class AllFeedFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +42,7 @@ public class MyFeedFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public MyFeedFragment() {
+    public AllFeedFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +52,11 @@ public class MyFeedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyFeedFragment.
+     * @return A new instance of fragment AllFeedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyFeedFragment newInstance(String param1, String param2) {
-        MyFeedFragment fragment = new MyFeedFragment();
+    public static AllFeedFragment newInstance(String param1, String param2) {
+        AllFeedFragment fragment = new AllFeedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,8 +67,6 @@ public class MyFeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -69,20 +77,41 @@ public class MyFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_my_feed, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_all_feed, container, false);
+        RecyclerView feed = rootView.findViewById(R.id.myRecyclerAll);
 
-        RecyclerView feed = rootView.findViewById(R.id.myRecycler2);
-        //int[] imgs= {R.drawable.american,R.drawable.flixus,R.drawable.got,R.drawable.wire};
-        //Ejemplo TODO quitar cuando tengamos implementado hacerlo con servidor
-
-        Bitmap got = BitmapFactory.decodeResource(getResources(),
-                R.drawable.got);
-        Bitmap wire = BitmapFactory.decodeResource(getResources(),
-                R.drawable.wire);
-        Bitmap[] imgs = {got, wire};
-        String[] names = {"Game Of Thrones", "The Wire"};
-        String[] followers = {"23", "44"};
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        String user = prefs.getString("user", "");
+        JSONArray results = null;
+        try {
+            results = controladorBDWebService.getInstance().getAllFeed(this.getActivity(), user);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Bitmap[] imgs;
+        String[] names;
+        String[] locations;
+        if (!results.equals(null)) {
+            imgs = new Bitmap[results.size()];
+            names = new String[results.size()];
+            locations = new String[results.size()];
+            for (int i = 0; i < results.size(); i++) {
+                JSONObject tmp = (JSONObject) results.get(i);
+                names[i] = (String) tmp.get("name");
+                locations[i] = (String) tmp.get("location");
+                String img64 = (String) tmp.get("image");
+                InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
+                Bitmap img = BitmapFactory.decodeStream(stream);
+                imgs[i] = img;
+            }
+        } else {
+            imgs = new Bitmap[0];
+            names = new String[0];
+            locations = new String[0];
+        }
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations);
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
@@ -95,8 +124,8 @@ public class MyFeedFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
- /*   @Override
+/*
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {

@@ -66,7 +66,7 @@ public class Perfil extends Fragment {
                 R.drawable.wire);
         Bitmap[] imgs = {got, wire};
         String[] names = {"Game Of Thrones", "The Wire"};
-        int[] followers = {23, 44};
+        String[] followers = {"23", "44"};
         MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers);
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());

@@ -20,11 +20,11 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private String[] creators;
     private int[] followers;
 
-    public MyCardViewAdapter(String[] nombres, Bitmap[] imagenes, int[] seguidores) {
+    public MyCardViewAdapter(String[] nombres, Bitmap[] imagenes, String[] lugares) {
         //TODO establecer los elementos a mostrar
         names = nombres;
         imgs = imagenes;
-        followers = seguidores;
+        locations = lugares;
     }
 
     @NonNull
@@ -42,10 +42,10 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         ImageView img = myViewHolder.myImg;
         TextView name = myViewHolder.eventName;
-        TextView followerz = myViewHolder.followers;
+        TextView location = myViewHolder.location;
         img.setImageBitmap(imgs[i]);
         name.setText(names[i]);
-        followerz.setText(String.valueOf(followers[i]));
+        location.setText(String.valueOf(locations[i]));
     }
 
     @Override

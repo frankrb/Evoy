@@ -82,6 +82,29 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         foto = foto64;
     }
 
+    public conexionBDWebService(Context cont, String oper, String usr) {
+        //GET ALL FEED
+        context = cont;
+        operacion = oper;
+        usuario = usr;
+    }
+
+    public conexionBDWebService(Context cont, String oper, String usr, String param) {
+        context = cont;
+        operacion = oper;
+        usuario = usr;
+        contrasena = param;
+        ejercicio = param;
+        token = param;
+    }
+
+    public conexionBDWebService(Context cont, String oper, String usr, int p) {
+        context = cont;
+        operacion = oper;
+        usuario = usr;
+        peso = p;
+    }
+
     /**Metodo que devuelve un json con los resultados de las distintas peticiones
      * **/
     @Override
@@ -94,41 +117,17 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             case "login":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/login.php";
                 break;
-            case "updateUsuarioDetalles":
-                direccion = "https://134.209.235.115/framos001/WEB/php/updateUsuarioDetalles.php";
-                break;
-            case "updateUsuarioEjercicio":
-                direccion = "https://134.209.235.115/framos001/WEB/php/updateUsuarioEjercicio.php";
-                break;
-            case "updatePesoUsuario":
-                direccion = "https://134.209.235.115/framos001/WEB/php/updatePesoUsuario.php";
-                break;
-            case "existenDatos":
-                direccion = "https://134.209.235.115/framos001/WEB/php/existenDatos.php";
-                break;
             case "insertarEvento":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/insertarEvento.php";
                 break;
             case "getDatos":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/getDatos.php";
                 break;
-            case "getPesos":
-                direccion = "https://134.209.235.115/framos001/WEB/php/getPesos.php";
-                break;
-            case "insertarPeso":
-                direccion = "https://134.209.235.115/framos001/WEB/php/insertarPeso.php";
-                break;
             case "insertarUsuario":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/insertarUsuario.php";
                 break;
-            case "insertarToken":
-                direccion = "https://134.209.235.115/framos001/WEB/php/insertarToken.php";
-                break;
-            case "mensajesFCMweb":
-                direccion = "https://134.209.235.115/framos001/WEB/php/mensajesFCMweb.php";
-                break;
-            case "saveImg":
-                direccion = "https://134.209.235.115/framos001/WEB/php/saveImg.php";
+            case "getAllFeed":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/allEvents.php";
                 break;
             default:
                 break;
@@ -144,7 +143,29 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             }
             //inicializamos los parametros de la petición
             String parametros ="";
-
+            switch (operacion) {
+                case "insertarEvento":
+                    Uri.Builder builder = new Uri.Builder()
+                            .appendQueryParameter("iduser", usuario).appendQueryParameter("name", eName).appendQueryParameter("details", eDescription).appendQueryParameter("datea", eDate).appendQueryParameter("location", eLocation).appendQueryParameter("lat", latitude).appendQueryParameter("lon", longitude).appendQueryParameter("image", foto);
+                    parametros = builder.build().getEncodedQuery();
+                    break;
+                case "getAllFeed":
+                    parametros = "iduser=" + usuario;
+                    break;
+                case "getDatos":
+                    parametros = "user=" + usuario + "&password=" + contrasena + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
+                    break;
+                case "login":
+                    parametros = "user=" + usuario + "&password=" + contrasena + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
+                    break;
+                case "insertarUsuario":
+                    parametros = "user=" + usuario + "&password=" + contrasena + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
+                    break;
+                default:
+                    parametros = "";
+                    break;
+            }
+            /*
             if(!operacion.equals("insertarEvento")) {
                 //parámetros que le pasamos al php
                  parametros = "user=" + usuario + "&password=" + contrasena  + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
@@ -152,7 +173,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("iduser", usuario).appendQueryParameter("name", eName).appendQueryParameter("details", eDescription).appendQueryParameter("datea", eDate).appendQueryParameter("location", eLocation).appendQueryParameter("lat", latitude).appendQueryParameter("lon", longitude).appendQueryParameter("image", foto);
                  parametros = builder.build().getEncodedQuery();
-            }
+            }*/
 
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);//necesario por el método POST u PUT
@@ -190,25 +211,6 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             e.printStackTrace();
         }
         return json;
-        }
-        public conexionBDWebService(Context cont, String oper, String usr, String param){
-            context=cont;
-            operacion=oper;
-            usuario=usr;
-            contrasena=param;
-            ejercicio=param;
-            token = param;
-        }
-    public conexionBDWebService(Context cont, String oper, String usr, int p){
-        context=cont;
-        operacion=oper;
-        usuario=usr;
-        peso=p;
-    }
-        public conexionBDWebService(Context cont, String oper, String usr){
-            context=cont;
-            operacion=oper;
-            usuario=usr;
         }
         public conexionBDWebService(Context cont, String oper, String usr, int pes, int alt, String nacimiento, String sex){
             context=cont;

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -225,7 +224,7 @@ public class AddNewEvent extends AppCompatActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent mapsIntent = new Intent(getApplicationContext(), GetLocationActivity.class);
+                // Intent mapsIntent = new Intent(getApplicationContext(), ShowLocationActivity.class);
                 // startActivityForResult(mapsIntent,REQUEST_MAP_LOCATION);
                 List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 // Start the autocomplete intent.

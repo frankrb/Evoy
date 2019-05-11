@@ -9,12 +9,12 @@ import android.widget.TextView;
 public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView eventName;
     ImageView myImg;
-    TextView followers;
+    TextView location;
 
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
         eventName = itemView.findViewById(R.id.textView6);
         myImg = itemView.findViewById(R.id.imageView5);
-        followers = itemView.findViewById(R.id.textView13);
+        location = itemView.findViewById(R.id.textView13);
     }
 }
