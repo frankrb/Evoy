@@ -3,6 +3,7 @@ package com.example.evoy;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -36,9 +38,9 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
     String eName = "";
     String eDescription ="";
     String eLocation = "";
+    String latitude;
+    String longitude;
     String eDate = "";
-
-
 
     public conexionBDWebService(Context cont, String tok) {
         context=cont;
@@ -52,6 +54,32 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         usuario=nombreUsuario;
         foto = fotoen64;
         titulo=tit;
+    }
+
+    public conexionBDWebService(Context cont, String oper, String usr, String nom, String apell, String em, String contra, String birth) {
+        //insertar usuairo evoy
+        context = cont;
+        operacion = oper;
+        usuario = usr;
+        nombre = nom;
+        apellidos = apell;
+        email = em;
+        contrasena = contra;
+        fechaNac = birth;
+    }
+
+    public conexionBDWebService(Context cont, String oper, String usr, String event_name, String description, String location, String lat, String lon, String fecha, String foto64) {
+        //insertar evento
+        context = cont;
+        operacion = oper;
+        usuario = usr;
+        eName = event_name;
+        eDescription = description;
+        eLocation = location;
+        latitude = lat;
+        longitude = lon;
+        eDate = fecha;
+        foto = foto64;
     }
 
     /**Metodo que devuelve un json con los resultados de las distintas peticiones
@@ -122,7 +150,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                  parametros = "user=" + usuario + "&password=" + contrasena  + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
             }else{
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("iduser", usuario).appendQueryParameter("image",foto).appendQueryParameter("name",eName).appendQueryParameter("details",eDescription).appendQueryParameter("event_date",eDate);
+                        .appendQueryParameter("iduser", usuario).appendQueryParameter("name", eName).appendQueryParameter("details", eDescription).appendQueryParameter("datea", eDate).appendQueryParameter("location", eLocation).appendQueryParameter("lat", latitude).appendQueryParameter("lon", longitude).appendQueryParameter("image", foto);
                  parametros = builder.build().getEncodedQuery();
             }
 
@@ -136,11 +164,11 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             out.close();
 
             int statusCode = urlConnection.getResponseCode();
-
+            Log.d("StatusCode", String.valueOf(statusCode));
             if (statusCode == 200){
                 //guardamos los resultados en el json
                 BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader (new InputStreamReader(inputStream, "UTF-8"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String line, result="";
                 while ((line = bufferedReader.readLine()) != null){
                     result += line;
@@ -162,23 +190,6 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             e.printStackTrace();
         }
         return json;
-        }
-
-
-        public conexionBDWebService(Context cont, String oper, String usr, String nom, String apell, String em, String contra, String birth){
-        context=cont;
-        operacion=oper;
-        usuario=usr;
-        nombre=nom;
-        eName=nom;
-        apellidos=apell;
-        eDescription=apell;
-        email=em;
-        eLocation=em;
-        contrasena=contra;
-        eDate = contra;
-        fechaNac = birth;
-        foto=birth;
         }
         public conexionBDWebService(Context cont, String oper, String usr, String param){
             context=cont;

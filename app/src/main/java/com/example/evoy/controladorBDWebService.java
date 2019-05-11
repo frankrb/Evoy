@@ -130,9 +130,9 @@ public class controladorBDWebService {
         Toast.makeText(applicationContext, "*******RESPUESTAS: \n" + res + "\n**********", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean insertarEvento(Context context, String insertarEvento, String user, String nombre, String descripcion, String coordenadas, String horaTimestamp, String imagen64) throws ExecutionException, InterruptedException {
+    public boolean insertarEvento(Context context, String insertarEvento, String user, String nombre, String descripcion, String location_name, String lat, String lon, String horaTimestamp, String imagen64) throws ExecutionException, InterruptedException {
         boolean correcto=false;
-        JSONObject json = new conexionBDWebService(context, insertarEvento,user,nombre,descripcion,coordenadas,horaTimestamp,imagen64).execute().get();
+        JSONObject json = new conexionBDWebService(context, insertarEvento, user, nombre, descripcion, location_name, lat, lon, horaTimestamp, imagen64).execute().get();
 
         String res = (String) json.get("respuesta");
 

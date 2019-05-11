@@ -34,4 +34,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_get_location">GetLocation</string>
+    <string name="api_key">AIzaSyADhK72JjGFDBhVivlOoy9-B7Pn556VMzs</string>
 </resources>
