@@ -95,9 +95,9 @@ public class Perfil extends Fragment {
 
         try {
             datos = controladorBDWebService.getInstance().getDatos(getContext(),"getDatos",user);
-            usuario.setText(datos.get("usuario").toString());
-            nombreYapellidos.setText(datos.get("nombre").toString()+" "+datos.get("apellidos").toString());
-            email.setText(datos.get("email").toString());
+            usuario.setText("Usuario: "+datos.get("usuario").toString());
+            nombreYapellidos.setText("Nombre: "+datos.get("nombre").toString()+" "+datos.get("apellidos").toString());
+            email.setText("Email: "+datos.get("email").toString());
 
         } catch (ExecutionException e) {
             e.printStackTrace();

@@ -32,10 +32,8 @@ import java.util.concurrent.ExecutionException;
 public class AddNewEvent extends AppCompatActivity {
     EditText nombre;
     EditText descripcion;
-    ConstraintLayout location;
-    LinearLayout fecha;
+    ImageView location;
     TextView valorFecha;
-    LinearLayout hora;
     TextView valorHora;
     ImageView imagen;
     Button okBtn;
@@ -104,10 +102,8 @@ public class AddNewEvent extends AppCompatActivity {
         //inicializamos
         nombre = findViewById(R.id.ename);
         descripcion = findViewById(R.id.edetails);
-        location = findViewById(R.id.elocation);
-        fecha = findViewById(R.id.layoutFecha);
+        location = findViewById(R.id.imageButton);
         valorFecha = findViewById(R.id.fecha);
-        hora = findViewById(R.id.layoutHora);
         valorHora = findViewById(R.id.hora);
         imagen = findViewById(R.id.foto);
         okBtn = findViewById(R.id.okBtn2);
@@ -127,7 +123,6 @@ public class AddNewEvent extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("fdsgsdhkjfbkhsdbfbsdkfhbsdkfhbksdjhbfkjsdh: "+nombre.getText().toString().trim()+ descripcion.getText().toString().trim());
                 if(!nombre.getText().toString().trim().equals("") && !descripcion.getText().toString().trim().equals("")){
 
                     try {
@@ -156,14 +151,14 @@ public class AddNewEvent extends AppCompatActivity {
             }
         });
 
-        fecha.setOnClickListener(new View.OnClickListener() {
+        valorFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePickerDialog();
             }
         });
 
-        hora.setOnClickListener(new View.OnClickListener() {
+        valorHora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hourPicker();

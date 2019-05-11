@@ -24,28 +24,25 @@ public class controladorBDWebService {
         return instancia;
     }
     //devuelve true si los datos del usuario son correctos
-    public boolean login(Context cont, String oper, String usr, String contra) throws IOException, ParseException, ExecutionException, InterruptedException {
-        boolean sePuede = false;
+    public boolean login(Context cont, String oper, String usr, String contra) throws ExecutionException, InterruptedException {
 
         JSONObject json = new conexionBDWebService(cont, oper, usr, contra).execute().get();
 
-        String user = (String) json.get("usuario");
-        if(user!=null){
-
-            sePuede=true;
-
-        }
-        return sePuede;
+        return !json.isEmpty();
     }
     //devuelve true si existen datos adicionales del usuario
     public boolean existenDatos(Context cont, String oper, String usr) throws ExecutionException, InterruptedException {
         boolean existen=true;
         JSONObject json = new conexionBDWebService(cont, oper, usr).execute().get();
+        String user = null;
 
-        String user = (String) json.get("usuario");
+        if(!json.isEmpty()){
+            user = (String) json.get("usuario");
+        }
+
 
         if(user!=null){
-        existen=false;
+            existen=false;
         }
         return existen;
     }
@@ -61,36 +58,25 @@ public class controladorBDWebService {
 
         String res = (String) json.get("respuesta");
 
-        if(res.equals("correcto")){
-            correcto=true;
-        }
-        return correcto;
+        return res.equals("correcto");
     }
 
     //devuelve true si se ha realizado correctamente la petición
     public boolean updateUsuarioDetalles(Context applicationContext, String oper, String usr, int peso, int alt, String fecha, String genero) throws ExecutionException, InterruptedException {
-        boolean correcto=false;
         JSONObject json = new conexionBDWebService(applicationContext, oper, usr,peso, alt, fecha, genero).execute().get();
 
         String res = (String) json.get("respuesta");
 
-        if(res.equals("correcto")){
-            correcto=true;
-        }
-        return correcto;
+        return res.equals("correcto");
 
     }
     //devuelve true si se ha realizado correctamente la petición
     public boolean insertarPesoInicial(Context applicationContext, String oper, String usr, int peso) throws ExecutionException, InterruptedException {
-        boolean correcto=false;
         JSONObject json = new conexionBDWebService(applicationContext, oper, usr,peso).execute().get();
 
         String res = (String) json.get("respuesta");
 
-        if(res.equals("correcto")){
-            correcto=true;
-        }
-        return correcto;
+        return res.equals("correcto");
 
     }
     //inserta un nuevo peso y actualiza el peso del usuario
@@ -125,10 +111,7 @@ public class controladorBDWebService {
 
         String res = (String) json.get("respuesta");
 
-        if(res.equals("correcto")){
-            correcto=true;
-        }
-        return correcto;
+        return res.equals("correcto");
     }
 
     //inserta un nuevo token del usuario
@@ -153,9 +136,6 @@ public class controladorBDWebService {
 
         String res = (String) json.get("respuesta");
 
-        if(res.equals("correcto")){
-            correcto=true;
-        }
-        return correcto;
+        return res.equals("correcto");
     }
 }
