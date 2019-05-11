@@ -19,7 +19,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -45,9 +44,7 @@ public class AddNewEvent extends AppCompatActivity {
     EditText nombre;
     EditText descripcion;
     static final int REQUEST_MAP_LOCATION = 2;
-    LinearLayout fecha;
     TextView valorFecha;
-    LinearLayout hora;
     TextView valorHora;
     ImageView imagen;
     ImageButton location;
@@ -142,9 +139,7 @@ public class AddNewEvent extends AppCompatActivity {
         nombre = findViewById(R.id.ename);
         descripcion = findViewById(R.id.edetails);
         location = findViewById(R.id.imageButton);
-        fecha = findViewById(R.id.layoutFecha);
         valorFecha = findViewById(R.id.fecha);
-        hora = findViewById(R.id.layoutHora);
         valorHora = findViewById(R.id.hora);
         imagen = findViewById(R.id.foto);
         okBtn = findViewById(R.id.okBtn2);
@@ -174,13 +169,6 @@ public class AddNewEvent extends AppCompatActivity {
                     try {
                         if(!date.equals("")&& !hour.equals("")){
                             horaTimestamp=date+" "+hour+CERO;
-                            System.out.println(user);
-                            System.out.println(nombre.getText().toString().trim());
-                            System.out.println(descripcion.getText().toString().trim());
-                            System.out.println(location_name);
-                            System.out.println(latitude);
-                            System.out.println(longitude);
-                            System.out.println(horaTimestamp);
                             String lat = String.valueOf(latitude);
                             String lon = String.valueOf(longitude);
                             boolean correcto = controladorBDWebService.getInstance().insertarEvento(AddNewEvent.this, "insertarEvento", user, nombre.getText().toString().trim(), descripcion.getText().toString().trim(), location_name, lat, lon, horaTimestamp, fotoen64);
@@ -206,14 +194,14 @@ public class AddNewEvent extends AppCompatActivity {
             }
         });
 
-        fecha.setOnClickListener(new View.OnClickListener() {
+        valorFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 datePickerDialog();
             }
         });
 
-        hora.setOnClickListener(new View.OnClickListener() {
+        valorHora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hourPicker();
