@@ -55,9 +55,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Login.this, BottomNavActivity.class);
+
                 try {
                     if(login(user.getText().toString().trim(),pass.getText().toString().trim())){
                         guardarpreferencias(user.getText().toString().trim(),pass.getText().toString().trim());
+                        //i.putExtra("user",user.getText().toString().trim());
                         startActivity(i);
                         finish();
 

@@ -5,10 +5,7 @@ import android.widget.Toast;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 public class controladorBDWebService {
@@ -51,15 +48,6 @@ public class controladorBDWebService {
         JSONObject json = new conexionBDWebService(cont, oper, usr).execute().get();
         return json;
     }
-    //devuelve true si se ha realizado correctamente la petición
-    public boolean updateUsuarioEjercicio(Context cont,String oper, String usr,String ejer) throws ExecutionException, InterruptedException {
-        boolean correcto=false;
-        JSONObject json = new conexionBDWebService(cont, oper, usr,ejer).execute().get();
-
-        String res = (String) json.get("respuesta");
-
-        return res.equals("correcto");
-    }
 
     //devuelve true si se ha realizado correctamente la petición
     public boolean updateUsuarioDetalles(Context applicationContext, String oper, String usr, int peso, int alt, String fecha, String genero) throws ExecutionException, InterruptedException {
@@ -69,39 +57,6 @@ public class controladorBDWebService {
 
         return res.equals("correcto");
 
-    }
-    //devuelve true si se ha realizado correctamente la petición
-    public boolean insertarPesoInicial(Context applicationContext, String oper, String usr, int peso) throws ExecutionException, InterruptedException {
-        JSONObject json = new conexionBDWebService(applicationContext, oper, usr,peso).execute().get();
-
-        String res = (String) json.get("respuesta");
-
-        return res.equals("correcto");
-
-    }
-    //inserta un nuevo peso y actualiza el peso del usuario
-    public void insertarPeso(Context applicationContext, String insertarPeso, String nombreUsuario, int peso) {
-        new conexionBDWebService(applicationContext,insertarPeso,nombreUsuario, peso).execute();
-
-    }
-
-    //devuelve un array con todos los pesos del usuario
-    public int[] getPesos(Context applicationContext, String getPesos, String nombreUsuario) throws ExecutionException, InterruptedException {
-        JSONObject json = new conexionBDWebService(applicationContext,getPesos,nombreUsuario).execute().get();
-        JSONArray arr = (JSONArray) json.get("Pesos");
-        int total = arr.size();
-        int[] pesos = new int[total];
-
-        Iterator i = arr.iterator();
-        int cont =0;
-        while (i.hasNext()) {
-            JSONObject varPeso = (JSONObject) i.next();
-            int peso = Integer.parseInt((String)varPeso.get("peso"));
-            pesos[cont]=peso;
-            cont++;
-        }
-
-        return pesos;
     }
 
     //inserta un nuevo usuario con los datos proporcionados
@@ -130,12 +85,17 @@ public class controladorBDWebService {
         Toast.makeText(applicationContext, "*******RESPUESTAS: \n" + res + "\n**********", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean insertarEvento(Context context, String insertarEvento, String user, String nombre, String descripcion, String coordenadas, String horaTimestamp, String imagen64) throws ExecutionException, InterruptedException {
+    public boolean insertarEvento(Context context, String insertarEvento, String user, String nombre, String descripcion, String location_name, String lat, String lon, String horaTimestamp, String imagen64) throws ExecutionException, InterruptedException {
         boolean correcto=false;
-        JSONObject json = new conexionBDWebService(context, insertarEvento,user,nombre,descripcion,coordenadas,horaTimestamp,imagen64).execute().get();
+        JSONObject json = new conexionBDWebService(context, insertarEvento, user, nombre, descripcion, location_name, lat, lon, horaTimestamp, imagen64).execute().get();
 
         String res = (String) json.get("respuesta");
 
         return res.equals("correcto");
+    }
+
+    public JSONArray getAllFeed(Context context, String username) throws ExecutionException, InterruptedException {
+        JSONArray json = new ConexionBDEventos(context, username).execute().get();
+        return json;
     }
 }

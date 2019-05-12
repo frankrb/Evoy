@@ -25,13 +25,13 @@
     <string name="myFeed">Mis eventos</string>
     <string name="allFeed">Explorar</string>
     <string name="myProfile">Mi Perfil</string>
-    <string name="followers">Seguidores:</string>
+    <string name="lugar">Lugar:</string>
 
     <string name="profile_username">Usuario:</string>
     <string name="profile_name">Nombre:</string>
     <string name="profile_surname">Apellido:</string>
     <string name="profile_email">E-mail:</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_get_location">Maps</string>
+    <string name="api_key">AIzaSyADhK72JjGFDBhVivlOoy9-B7Pn556VMzs</string>
 </resources>
