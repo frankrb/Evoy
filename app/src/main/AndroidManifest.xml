@@ -15,8 +15,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".AddNewEvent"></activity>
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        >
+        <activity android:name=".DescripcionEventoActivity"></activity>
+        <activity android:name=".AddNewEvent" />
         <activity android:name=".Perfil" />
         <activity
             android:name=".BottomNavActivity"
