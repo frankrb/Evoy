@@ -129,6 +129,9 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             case "getAllFeed":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/allEvents.php";
                 break;
+            case "getFollowed":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/getFollowed.php";
+                break;
             default:
                 break;
         }
@@ -160,6 +163,9 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                     break;
                 case "insertarUsuario":
                     parametros = "user=" + usuario + "&password=" + contrasena + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
+                    break;
+                case "getFollowed":
+                    parametros = "user=" + usuario;
                     break;
                 default:
                     parametros = "";

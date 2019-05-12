@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,6 +75,7 @@ public class AllFeedFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,11 +83,16 @@ public class AllFeedFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_all_feed, container, false);
         RecyclerView feed = rootView.findViewById(R.id.myRecyclerAll);
 
-        SharedPreferences prefs = this.getActivity().getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String user = prefs.getString("user", "");
+
         JSONArray results = null;
+        int[] idEvents = null;
         try {
             results = controladorBDWebService.getInstance().getAllFeed(this.getActivity(), user);
+            idEvents = controladorBDWebService.getInstance().getFollowed(getActivity(),"getFollowed",user);
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -93,10 +101,14 @@ public class AllFeedFragment extends Fragment {
         Bitmap[] imgs;
         String[] names;
         String[] locations;
+        Boolean[] followed = null;
+        
         if (!results.equals(null)) {
             imgs = new Bitmap[results.size()];
             names = new String[results.size()];
             locations = new String[results.size()];
+            followed = new Boolean[results.size()];
+
             for (int i = 0; i < results.size(); i++) {
                 JSONObject tmp = (JSONObject) results.get(i);
                 names[i] = (String) tmp.get("name");
@@ -105,17 +117,41 @@ public class AllFeedFragment extends Fragment {
                 InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
                 Bitmap img = BitmapFactory.decodeStream(stream);
                 imgs[i] = img;
+                int idEvent = Integer.valueOf((String) tmp.get("id"));
+                if(idEvents.equals(null)){
+                    followed[i]=false;
+                }else {
+                    if (esta(idEvents,idEvent)) {
+                        followed[i] = true;
+                    } else {
+                        followed[i] = false;
+                    }
+                }
             }
         } else {
             imgs = new Bitmap[0];
             names = new String[0];
             locations = new String[0];
         }
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations);
+
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed);
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
         return rootView;
+    }
+
+    private boolean esta(int[] idEvents, int idEvent) {
+        boolean esta = false;
+        int i = 0;
+        while(i<idEvents.length){
+            if (idEvents[i]==idEvent){
+                esta = true;
+                break;
+            }
+            i++;
+        }
+        return esta;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

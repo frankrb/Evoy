@@ -6,6 +6,7 @@ import android.widget.Toast;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 public class controladorBDWebService {
@@ -97,5 +98,23 @@ public class controladorBDWebService {
     public JSONArray getAllFeed(Context context, String username) throws ExecutionException, InterruptedException {
         JSONArray json = new ConexionBDEventos(context, username).execute().get();
         return json;
+    }
+
+    //devuelve un array con el id de todos los eventos que sigue el usuario
+    public int[] getFollowed(Context applicationContext, String getFollowed, String nombreUsuario) throws ExecutionException, InterruptedException {
+        JSONObject json = new conexionBDWebService(applicationContext,getFollowed,nombreUsuario).execute().get();
+        JSONArray arr = (JSONArray) json.get("Followed");
+        int total = arr.size();
+        int[] pesos = new int[total];
+
+        Iterator i = arr.iterator();
+        int cont =0;
+        while (i.hasNext()) {
+            JSONObject idFollowed = (JSONObject) i.next();
+            int idEvent = Integer.valueOf((String) idFollowed.get("idEvent"));
+            pesos[cont]=idEvent;
+            cont++;
+        }
+        return pesos;
     }
 }

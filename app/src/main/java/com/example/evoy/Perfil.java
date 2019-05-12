@@ -67,7 +67,8 @@ public class Perfil extends Fragment {
         Bitmap[] imgs = {got, wire};
         String[] names = {"Game Of Thrones", "The Wire"};
         String[] followers = {"23", "44"};
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers);
+        Boolean[] followed = {true,false};
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed);
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
