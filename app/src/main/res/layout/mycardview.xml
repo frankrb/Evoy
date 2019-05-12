@@ -31,8 +31,10 @@
                 android:layout_width="350dp"
                 android:layout_height="20dp"
                 android:background="#FFFFFF"
+                android:fontFamily="@font/advent_pro_light"
                 android:text="TextView"
                 android:textColor="#6B6B6B"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/imageView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +57,11 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:checked="false"
+                android:fontFamily="@font/advent_pro_light"
                 android:text="ToggleButton"
                 android:textOff="@string/follow"
                 android:textOn="@string/unfollow"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -67,7 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/advent_pro_light"
                 android:text="@string/lugar"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
@@ -75,10 +82,11 @@
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/advent_pro_light"
                 android:text="TextView"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
         </android.support.constraint.ConstraintLayout>

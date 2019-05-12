@@ -85,6 +85,8 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return imgs.length;

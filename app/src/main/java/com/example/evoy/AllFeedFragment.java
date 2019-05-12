@@ -1,6 +1,7 @@
 package com.example.evoy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -87,6 +88,7 @@ public class AllFeedFragment extends Fragment {
         String user = prefs.getString("user", "");
 
         JSONArray results = null;
+
         int[] idEvents = null;
         try {
             results = controladorBDWebService.getInstance().getAllFeed(this.getActivity(), user);
@@ -98,23 +100,42 @@ public class AllFeedFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Bitmap[] imgs;
-        String[] names;
-        String[] locations;
+        final int[] ids;
+        final Bitmap[] imgs;
+        final String[] names;
+        final String[] locations;
+        final String[] latitudes;
+        final String[] longitudes;
+        final String[] descriptions;
+        final String[] dates;
+
         Boolean[] followed = null;
         int[] ids = null;
-        
+
         if (!results.equals(null)) {
+
+            ids = new int[results.size()];
             imgs = new Bitmap[results.size()];
             names = new String[results.size()];
             locations = new String[results.size()];
             followed = new Boolean[results.size()];
             ids = new int[results.size()];
 
+            latitudes = new String[results.size()];
+            longitudes = new String[results.size()];
+            descriptions = new String[results.size()];
+            dates = new String[results.size()];
+
             for (int i = 0; i < results.size(); i++) {
+
                 JSONObject tmp = (JSONObject) results.get(i);
+                ids[i] = Integer.parseInt((String)tmp.get("id"));
                 names[i] = (String) tmp.get("name");
                 locations[i] = (String) tmp.get("location");
+                latitudes[i] = (String) tmp.get("latitude");
+                longitudes[i] = (String) tmp.get("longitude");
+                descriptions[i] = (String) tmp.get("details");
+                dates[i] = (String) tmp.get("date");
                 String img64 = (String) tmp.get("image");
                 ids[i]= Integer.parseInt((String) tmp.get("id"));
                 InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
@@ -135,12 +156,34 @@ public class AllFeedFragment extends Fragment {
             imgs = new Bitmap[0];
             names = new String[0];
             locations = new String[0];
+            descriptions = new String[0];
+            longitudes = new String[0];
+            latitudes = new String[0];
+            dates = new String[0];
         }
 
         MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
+
+
+        feed.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent visorDetalles = new Intent(v.getContext(), DescripcionEventoActivity.class);
+                visorDetalles.putExtra("NOMBRE_EVENTO", names[getId()]);
+                visorDetalles.putExtra("DESC_EVENTO", descriptions[getId()]);
+                visorDetalles.putExtra("IMAGE_EVENTO", imgs[getId()]);
+                visorDetalles.putExtra("DATE_EVENTO", dates[getId()]);
+                visorDetalles.putExtra("LOCATION_EVENTO", locations[getId()]);
+                visorDetalles.putExtra("LATITUDE_EVENTO", latitudes[getId()]);
+                visorDetalles.putExtra("LONGITUDE_EVENTO", longitudes[getId()]);
+                startActivity(visorDetalles);
+            }
+        });
+
         return rootView;
     }
 
