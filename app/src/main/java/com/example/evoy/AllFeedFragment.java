@@ -110,7 +110,6 @@ public class AllFeedFragment extends Fragment {
         final String[] dates;
 
         Boolean[] followed = null;
-        int[] ids = null;
 
         if (!results.equals(null)) {
 
@@ -119,7 +118,6 @@ public class AllFeedFragment extends Fragment {
             names = new String[results.size()];
             locations = new String[results.size()];
             followed = new Boolean[results.size()];
-            ids = new int[results.size()];
 
             latitudes = new String[results.size()];
             longitudes = new String[results.size()];
@@ -153,6 +151,7 @@ public class AllFeedFragment extends Fragment {
                 }
             }
         } else {
+            ids = new int[0];
             imgs = new Bitmap[0];
             names = new String[0];
             locations = new String[0];
