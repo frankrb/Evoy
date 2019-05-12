@@ -25,7 +25,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
     String apellidos="";
     String email="";
     String contrasena="";
-    int peso;
+    int idEvent;
     int altura;
     String fechaNac="";
     String sexo="";
@@ -102,7 +102,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         context = cont;
         operacion = oper;
         usuario = usr;
-        peso = p;
+        idEvent = p;
     }
 
     /**Metodo que devuelve un json con los resultados de las distintas peticiones
@@ -131,6 +131,12 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 break;
             case "getFollowed":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/getFollowed.php";
+                break;
+            case "startFollow":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/startFollow.php";
+                break;
+            case "stopFollow":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/stopFollow.php";
                 break;
             default:
                 break;
@@ -166,6 +172,12 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                     break;
                 case "getFollowed":
                     parametros = "user=" + usuario;
+                    break;
+                case "startFollow":
+                    parametros = "user=" + usuario + "&idEvent=" + idEvent;
+                    break;
+                case "stopFollow":
+                    parametros = "user=" + usuario + "&idEvent=" + idEvent;
                     break;
                 default:
                     parametros = "";
@@ -222,7 +234,6 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             context=cont;
             operacion=oper;
             usuario=usr;
-            peso=pes;
             altura=alt;
             fechaNac=nacimiento;
             sexo=sex;

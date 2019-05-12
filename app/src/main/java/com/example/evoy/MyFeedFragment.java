@@ -83,7 +83,8 @@ public class MyFeedFragment extends Fragment {
         String[] names = {"Game Of Thrones", "The Wire"};
         String[] followers = {"23", "44"};
         Boolean[] followed = {true,false};
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed);
+        int[] ids={0,1};
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed, ids,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);

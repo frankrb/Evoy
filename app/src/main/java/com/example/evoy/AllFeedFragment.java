@@ -102,18 +102,21 @@ public class AllFeedFragment extends Fragment {
         String[] names;
         String[] locations;
         Boolean[] followed = null;
+        int[] ids = null;
         
         if (!results.equals(null)) {
             imgs = new Bitmap[results.size()];
             names = new String[results.size()];
             locations = new String[results.size()];
             followed = new Boolean[results.size()];
+            ids = new int[results.size()];
 
             for (int i = 0; i < results.size(); i++) {
                 JSONObject tmp = (JSONObject) results.get(i);
                 names[i] = (String) tmp.get("name");
                 locations[i] = (String) tmp.get("location");
                 String img64 = (String) tmp.get("image");
+                ids[i]= Integer.parseInt((String) tmp.get("id"));
                 InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
                 Bitmap img = BitmapFactory.decodeStream(stream);
                 imgs[i] = img;
@@ -134,7 +137,7 @@ public class AllFeedFragment extends Fragment {
             locations = new String[0];
         }
 
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed);
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);

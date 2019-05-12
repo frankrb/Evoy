@@ -117,4 +117,12 @@ public class controladorBDWebService {
         }
         return pesos;
     }
+
+    public void startFollow(Context context, String user, int idEvent) {
+        new conexionBDWebService(context,"startFollow",user,idEvent).execute();
+    }
+
+    public void stopFollow(Context context, String user, int idEvent) {
+        new conexionBDWebService(context,"stopFollow",user,idEvent).execute();
+    }
 }

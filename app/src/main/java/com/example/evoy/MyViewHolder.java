@@ -12,6 +12,8 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     ImageView myImg;
     TextView location;
     ToggleButton tb;
+    String user;
+
 
 
     public MyViewHolder(@NonNull View itemView) {
