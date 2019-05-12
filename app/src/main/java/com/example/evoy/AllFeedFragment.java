@@ -161,27 +161,10 @@ public class AllFeedFragment extends Fragment {
             dates = new String[0];
         }
 
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,getContext());
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,descriptions, dates, latitudes, longitudes,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
-
-
-        feed.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent visorDetalles = new Intent(v.getContext(), DescripcionEventoActivity.class);
-                visorDetalles.putExtra("NOMBRE_EVENTO", names[getId()]);
-                visorDetalles.putExtra("DESC_EVENTO", descriptions[getId()]);
-                visorDetalles.putExtra("IMAGE_EVENTO", imgs[getId()]);
-                visorDetalles.putExtra("DATE_EVENTO", dates[getId()]);
-                visorDetalles.putExtra("LOCATION_EVENTO", locations[getId()]);
-                visorDetalles.putExtra("LATITUDE_EVENTO", latitudes[getId()]);
-                visorDetalles.putExtra("LONGITUDE_EVENTO", longitudes[getId()]);
-                startActivity(visorDetalles);
-            }
-        });
 
         return rootView;
     }

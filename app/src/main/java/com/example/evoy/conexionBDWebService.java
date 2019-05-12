@@ -42,11 +42,6 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
     String longitude;
     String eDate = "";
 
-    public conexionBDWebService(Context cont, String tok) {
-        context=cont;
-        operacion="saveToken";
-        token=tok;
-    }
 
     public conexionBDWebService(Context applicationContext, String saveImg, String nombreUsuario, String fotoen64, String tit) {
         context=applicationContext;
@@ -105,6 +100,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         idEvent = p;
     }
 
+
     /**Metodo que devuelve un json con los resultados de las distintas peticiones
      * **/
     @Override
@@ -137,6 +133,9 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 break;
             case "stopFollow":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/stopFollow.php";
+                break;
+            case "getImage":
+                direccion = "https://134.209.235.115/framos001/WEB/evoy/getImg.php";
                 break;
             default:
                 break;
@@ -178,6 +177,9 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                     break;
                 case "stopFollow":
                     parametros = "user=" + usuario + "&idEvent=" + idEvent;
+                    break;
+                case "getImage":
+                    parametros = "id=" + usuario;
                     break;
                 default:
                     parametros = "";
@@ -238,5 +240,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
             fechaNac=nacimiento;
             sexo=sex;
         }
+
+
 
 }

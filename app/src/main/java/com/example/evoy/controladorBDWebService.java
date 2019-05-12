@@ -1,13 +1,21 @@
 package com.example.evoy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.LocaleList;
+import android.util.Base64;
 import android.widget.Toast;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class controladorBDWebService {
     private static controladorBDWebService instancia;
@@ -125,4 +133,14 @@ public class controladorBDWebService {
     public void stopFollow(Context context, String user, int idEvent) {
         new conexionBDWebService(context,"stopFollow",user,idEvent).execute();
     }
+
+    public Bitmap getImage(Context context, String idEvent) throws ExecutionException, InterruptedException {
+
+        JSONObject res = (JSONObject) new conexionBDWebService(context,"getImage",idEvent).execute().get();
+        String img64 = (String) res.get("0");
+        InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
+        return BitmapFactory.decodeStream(stream);
+
+    }
+
 }

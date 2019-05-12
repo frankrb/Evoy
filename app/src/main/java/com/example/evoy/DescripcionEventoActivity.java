@@ -2,12 +2,18 @@ package com.example.evoy;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 public class DescripcionEventoActivity extends AppCompatActivity {
 
@@ -33,13 +39,26 @@ public class DescripcionEventoActivity extends AppCompatActivity {
         //Obtenemos los extras del Bundle para posteriormente sacar el Usuario actual.
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
-        String nombre_evento = b.getString("NOMBRE_EVENTO");
-        String desc_evento = b.getString("DESC_EVENTO");
-        Bitmap image_evento = (Bitmap) b.get("IMAGE_EVENTO");
-        String date_evento = b.getString("DATE_EVENTO");
-        final String location_evento = b.getString("LOCATION_EVENTO");
-        final String latitude_evento = b.getString("LATITUDE_EVENTO");
-        final String longitude_evento = b.getString("LONGITUDE_EVENTO");
+        String datosEvento = b.getString("DATOS_EVENTO");
+        String[] datosDesglosados = datosEvento.split("&");
+        System.out.println("ID DEL EVENTO:"+datosDesglosados[6]);
+        //Cargamos la imagen
+
+
+        Bitmap img64 = null;
+        try {
+            img64 = controladorBDWebService.getInstance().getImage(this,datosDesglosados[6]);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String nombre_evento = datosDesglosados[0];
+        String desc_evento = datosDesglosados[1];
+        String date_evento = datosDesglosados[2];
+        final String location_evento = datosDesglosados[3];
+        final String latitude_evento =datosDesglosados[4];
+        final String longitude_evento = datosDesglosados[5];
 
         //Gestionamos la fecha para obtener fecha y hora
         String[] dates = date_evento.split(" ");
@@ -47,7 +66,7 @@ public class DescripcionEventoActivity extends AppCompatActivity {
 
         nombreEvento.setText(nombre_evento);
         descEvento.setText(desc_evento);
-        imageEvento.setImageBitmap(image_evento);
+        imageEvento.setImageBitmap(img64);
         fechaEvento.setText(dates[0]);
         horaEvento.setText(dates[1]);
 

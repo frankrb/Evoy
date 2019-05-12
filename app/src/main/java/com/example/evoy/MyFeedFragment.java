@@ -81,10 +81,15 @@ public class MyFeedFragment extends Fragment {
                 R.drawable.wire);
         Bitmap[] imgs = {got, wire};
         String[] names = {"Game Of Thrones", "The Wire"};
+        String[] descriptions = {"2JAJAJAJA", "NO ERA TAN GRACIOSO"};
+        String[] dates = {"1996-05-05 13:33", "1996-05-05 13:33"};
+        String[] latitudes = {"38.3459963", "10.3910485"};
+        String[] longitudes = {"-0.4906855", "10.3910485"};
+
         String[] followers = {"23", "44"};
         Boolean[] followed = {true,false};
         int[] ids={0,1};
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed, ids,getContext());
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed, ids,descriptions,dates,latitudes,longitudes,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
