@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+/**clase que representa cada actividad**/
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private int[] ids;
@@ -56,6 +57,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
+
         final ImageView img = myViewHolder.myImg;
         final TextView name = myViewHolder.eventName;
         final TextView location = myViewHolder.location;
@@ -67,7 +69,6 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         tb.setChecked(followed[i]);
 
         //obtenemos el nombre del usuario de sharedpreferences
-
         SharedPreferences sharedpreferences = context.getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         final String user = sharedpreferences.getString("user", "");
 
@@ -75,13 +76,16 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         tb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int idEvent = ids[i];
 
+                int idEvent = ids[i];
                 if(tb.isChecked()){
+
                     //a true -> esta siguiendo el evento
                     controladorBDWebService.getInstance().startFollow(context,user,idEvent);
                     Toast.makeText(context,"Ha empezado a seguir al evento",Toast.LENGTH_SHORT).show();
+
                 }else{
+
                     //esta a false -> ha dejado de seguir el evento
                     controladorBDWebService.getInstance().stopFollow(context,user,idEvent);
                     Toast.makeText(context,"Ha dejado de seguir al evento",Toast.LENGTH_SHORT).show();
@@ -92,12 +96,14 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Pasamos todos los datos
                 String datos = names[i]+"&"+ details[i]+"&"+dates[i]+"&"+locations[i]+"&"+latitudes[i]+"&"+ longitudes[i]+"&"+ids[i];
                 Intent visorDetalles = new Intent(v.getContext(), DescripcionEventoActivity.class);
                 visorDetalles.putExtra("DATOS_EVENTO", datos);
                 //visorDetalles.putExtra("IMAGE_EVENTO", imgs[i]);
                 v.getContext().startActivity(visorDetalles);
+
             }
         });
 

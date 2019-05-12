@@ -41,7 +41,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**Actividad que se encarga de añadir un nuevo evento a la bbdd**/
 public class AddNewEvent extends AppCompatActivity {
+
     EditText nombre;
     EditText descripcion;
     static final int REQUEST_MAP_LOCATION = 2;
@@ -59,24 +61,32 @@ public class AddNewEvent extends AppCompatActivity {
     String horaTimestamp="";
     String fotoen64 = "";
     String user = "";
-
     SimpleDateFormat simpleDateFormat;
+
     private static final String CERO = ":00";
     private static final String DOS_PUNTOS = ":";
     public final Calendar c = Calendar.getInstance();
+
     final int horaact = c.get(Calendar.HOUR_OF_DAY);
     final int minutoact = c.get(Calendar.MINUTE);
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
     double longitude;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //obtenemos la imagen
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             Uri uri=data.getData();
             Bitmap imageBitmap = null;
             try {
+
                 imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -109,8 +119,10 @@ public class AddNewEvent extends AppCompatActivity {
 
             fotoen64 = Base64.encodeToString(fototransformada,Base64.DEFAULT);
         }
+        //obtenemos los valores de la localización
         if (requestCode == REQUEST_MAP_LOCATION) {
             if (resultCode == RESULT_OK) {
+
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng myPlace = place.getLatLng();
                 latitude = myPlace.latitude;
@@ -123,9 +135,11 @@ public class AddNewEvent extends AppCompatActivity {
                 valorLocation.setText(place.getName());
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
                 Log.i("Google Places", status.getStatusMessage());
+
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
@@ -136,7 +150,9 @@ public class AddNewEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_new_event);
+
         //inicializamos
         nombre = findViewById(R.id.ename);
         descripcion = findViewById(R.id.edetails);
@@ -155,7 +171,9 @@ public class AddNewEvent extends AppCompatActivity {
         //obtenemos el nombre del usuario de sharedpreferences
         SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         user = sharedpreferences.getString("user","");
+
         if(user==""){
+
             Intent i = new Intent(this, Login.class);
             startActivity(i);
             finish();
@@ -169,17 +187,25 @@ public class AddNewEvent extends AppCompatActivity {
 
                     try {
                         if(!date.equals("")&& !hour.equals("")){
+
                             horaTimestamp=date+" "+hour+CERO;
                             String lat = String.valueOf(latitude);
                             String lon = String.valueOf(longitude);
+                            //añadimos los valores del evento a la bbdd
                             boolean correcto = controladorBDWebService.getInstance().insertarEvento(AddNewEvent.this, "insertarEvento", user, nombre.getText().toString().trim(), descripcion.getText().toString().trim(), location_name, lat, lon, horaTimestamp, fotoen64);
+
                             if(correcto){
+
                                 finish();
+
                             }else{
+
                                 Toast.makeText(AddNewEvent.this,"Error al añadir evento a la BBDD",Toast.LENGTH_SHORT).show();
                             }
                         }else{
+
                             Toast.makeText(AddNewEvent.this,"Debe de poner una fecha y una hora al evento",Toast.LENGTH_SHORT).show();
+
                         }
 
 
@@ -190,6 +216,7 @@ public class AddNewEvent extends AppCompatActivity {
                     }
 
                 }else{
+
                     Toast.makeText(AddNewEvent.this,"Debe de poner un nombre y descripción al evento",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -213,10 +240,12 @@ public class AddNewEvent extends AppCompatActivity {
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent();
                 i.setType("image/*");
                 i.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(i,"Seleccione la foto del evento"),REQUEST_IMAGE_CAPTURE);
+
             }
         });
 
@@ -224,6 +253,7 @@ public class AddNewEvent extends AppCompatActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Intent mapsIntent = new Intent(getApplicationContext(), ShowLocationActivity.class);
                 // startActivityForResult(mapsIntent,REQUEST_MAP_LOCATION);
                 List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
@@ -232,20 +262,25 @@ public class AddNewEvent extends AppCompatActivity {
                         AutocompleteActivityMode.FULLSCREEN, fields)
                         .build(getApplicationContext());
                 startActivityForResult(intent, REQUEST_MAP_LOCATION);
+
             }
         });
 
 
     }
 
+    /**event picker para seleccionar la fecha del evento**/
     private void datePickerDialog(){
+
         Calendar calendario=Calendar.getInstance();
         int anyo=calendario.get(Calendar.YEAR);
         int mes=calendario.get(Calendar.MONTH);
         int dia=calendario.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog dpck= new DatePickerDialog(AddNewEvent.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
                 simpleDateFormat = new SimpleDateFormat(year+"-"+ month +"-"+dayOfMonth);
                 date = year+"-" + (month+1) +"-"+dayOfMonth;
                 valorFecha.setText(date);
@@ -254,7 +289,9 @@ public class AddNewEvent extends AppCompatActivity {
         dpck.show();
     }
 
+    /**event picker para seleccionar la hora del evento**/
     private void hourPicker(){
+
         TimePickerDialog recogerHora = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

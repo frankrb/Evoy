@@ -16,13 +16,17 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import static android.support.constraint.Constraints.TAG;
 
+/**Clase que se encarga de gestionar las llamadas al servicio Firebase Cloud Messaging(FCM)**/
 public class ServicioFirebase extends FirebaseMessagingService {
+
     public ServicioFirebase() {
     }
+
     /**Este métdo gestiona los mensajes recibidos desde FCM
      * **/
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
         //Si la aplicación está en background, se
         //muestra una notificación, pero no se
         //ejecuta este método
@@ -45,6 +49,7 @@ public class ServicioFirebase extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
+
         //Qué hacer cada vez que se genere un
         //token para el dispositivo
         Log.d(TAG, "Nuevo token: " + token);
@@ -53,6 +58,7 @@ public class ServicioFirebase extends FirebaseMessagingService {
     /**Este metodo lanza la notificación a nuestro teléfono
      * **/
     private void sendNotification(RemoteMessage.Notification notification) {
+
         Intent intent = new Intent(this, DescripcionEventoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -60,6 +66,7 @@ public class ServicioFirebase extends FirebaseMessagingService {
 
         String channelId = "NOTIFICACION";
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_launcher_web)
@@ -74,6 +81,7 @@ public class ServicioFirebase extends FirebaseMessagingService {
 
         // desde android Oreo el canal de notificación se requiere
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
             NotificationChannel channel = new NotificationChannel(channelId,
                     "Channel human readable title",
                     NotificationManager.IMPORTANCE_DEFAULT);

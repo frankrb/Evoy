@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+
+//actividad principal para controlar los fragments en los que estamos
 public class BottomNavActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -14,6 +16,7 @@ public class BottomNavActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
                 case R.id.myFeed:
                     loadFragment(new MyFeedFragment());
@@ -26,23 +29,30 @@ public class BottomNavActivity extends AppCompatActivity {
                     loadFragment(new Perfil());
                     return true;
             }
+
             return false;
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_bottom_nav);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         loadFragment(new MyFeedFragment());
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     private boolean loadFragment(Fragment fragment) {
+
         if (fragment != null) {
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
             return true;
         }
         return false;

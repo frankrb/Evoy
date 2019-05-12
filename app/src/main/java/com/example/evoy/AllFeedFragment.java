@@ -1,7 +1,6 @@
 package com.example.evoy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +33,7 @@ import java.util.concurrent.ExecutionException;
  * create an instance of this fragment.
  */
 public class AllFeedFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +59,7 @@ public class AllFeedFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static AllFeedFragment newInstance(String param1, String param2) {
+
         AllFeedFragment fragment = new AllFeedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -70,9 +71,12 @@ public class AllFeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
+
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -80,7 +84,8 @@ public class AllFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        // inflate layout para el fragment
         View rootView = inflater.inflate(R.layout.fragment_all_feed, container, false);
         RecyclerView feed = rootView.findViewById(R.id.myRecyclerAll);
 
@@ -91,6 +96,8 @@ public class AllFeedFragment extends Fragment {
 
         int[] idEvents = null;
         try {
+
+            //obtenemos los datos de todos los eventos
             results = controladorBDWebService.getInstance().getAllFeed(this.getActivity(), user);
             idEvents = controladorBDWebService.getInstance().getFollowed(getActivity(),"getFollowed",user);
 
@@ -100,6 +107,7 @@ public class AllFeedFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         final int[] ids;
         final Bitmap[] imgs;
         final String[] names;
@@ -144,13 +152,18 @@ public class AllFeedFragment extends Fragment {
                     followed[i]=false;
                 }else {
                     if (esta(idEvents,idEvent)) {
+
                         followed[i] = true;
+
                     } else {
+
                         followed[i] = false;
+
                     }
                 }
             }
         } else {
+
             ids = new int[0];
             imgs = new Bitmap[0];
             names = new String[0];
@@ -159,8 +172,10 @@ public class AllFeedFragment extends Fragment {
             longitudes = new String[0];
             latitudes = new String[0];
             dates = new String[0];
+
         }
 
+        //ponemos los eventos en los fragments
         MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,descriptions, dates, latitudes, longitudes,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
@@ -170,6 +185,7 @@ public class AllFeedFragment extends Fragment {
     }
 
     private boolean esta(int[] idEvents, int idEvent) {
+
         boolean esta = false;
         int i = 0;
         while(i<idEvents.length){
@@ -185,27 +201,10 @@ public class AllFeedFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
+
             mListener.onFragmentInteraction(uri);
         }
     }
-/*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
 
     /**
      * This interface must be implemented by activities that contain this

@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+/**Actividad para realizar el login en la aplicación**/
 public class Login extends AppCompatActivity {
     EditText user;
     EditText pass;
@@ -58,8 +59,8 @@ public class Login extends AppCompatActivity {
 
                 try {
                     if(login(user.getText().toString().trim(),pass.getText().toString().trim())){
+                        //guardamos los datos del usuario
                         guardarpreferencias(user.getText().toString().trim(),pass.getText().toString().trim());
-                        //i.putExtra("user",user.getText().toString().trim());
                         startActivity(i);
                         finish();
 
@@ -82,6 +83,7 @@ public class Login extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //llamar a la actividad de registro
                 Intent i = new Intent(Login.this,Registro.class);
                 startActivity(i);
             }
@@ -91,6 +93,7 @@ public class Login extends AppCompatActivity {
 
 
     private void guardarpreferencias(String user, String pass) {
+
         //creamos un archivo xml con las preferencias
         SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String usuario = user;
@@ -105,8 +108,9 @@ public class Login extends AppCompatActivity {
 
 
     private void cargarPreferencias() throws InterruptedException, ExecutionException, ParseException, IOException {
-        SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
 
+        //cargamos las preferencias
+        SharedPreferences sharedpreferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String user = sharedpreferences.getString("user","");
         String pass = sharedpreferences.getString("password","");
         if(user!="" && controladorBDWebService.getInstance().login(this,"login",user,pass)){
@@ -119,8 +123,9 @@ public class Login extends AppCompatActivity {
 
 
     private boolean login(String user, String pass) throws InterruptedException, ExecutionException, ParseException, IOException {
-        boolean correcto;
 
+        boolean correcto;
+        //comprobamos si el usuario y contraseña son correctos
         correcto = controladorBDWebService.getInstance().login(this,"login",user,pass);
 
         return correcto;

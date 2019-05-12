@@ -18,8 +18,10 @@ import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**clase que gestiona la conexión al servidor mediante php**/
 public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
-    String direccion = "https://134.209.235.115/framos001/WEB/php/usuarios.php";
+
+    String direccion = "https://134.209.235.115/framos001/WEB/evoy/usuarios.php";
     String usuario="";
     String nombre="";
     String apellidos="";
@@ -109,6 +111,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         JSONObject json= null;
 
         HttpsURLConnection urlConnection = null;
+
         switch(operacion) {
             case "login":
                 direccion = "https://134.209.235.115/framos001/WEB/evoy/login.php";
@@ -149,8 +152,10 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                 urlConnection.setConnectTimeout(5000);
                 urlConnection.setReadTimeout(5000);
             }
+
             //inicializamos los parametros de la petición
             String parametros ="";
+
             switch (operacion) {
                 case "insertarEvento":
                     Uri.Builder builder = new Uri.Builder()
@@ -185,15 +190,6 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
                     parametros = "";
                     break;
             }
-            /*
-            if(!operacion.equals("insertarEvento")) {
-                //parámetros que le pasamos al php
-                 parametros = "user=" + usuario + "&password=" + contrasena  + "&birth=" + fechaNac + "&name=" + nombre + "&surname=" + apellidos + "&email=" + email + "&token=" + token + "&foto=" + foto + "&titulo=" + titulo;
-            }else{
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("iduser", usuario).appendQueryParameter("name", eName).appendQueryParameter("details", eDescription).appendQueryParameter("datea", eDate).appendQueryParameter("location", eLocation).appendQueryParameter("lat", latitude).appendQueryParameter("lon", longitude).appendQueryParameter("image", foto);
-                 parametros = builder.build().getEncodedQuery();
-            }*/
 
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);//necesario por el método POST u PUT
@@ -232,6 +228,7 @@ public class conexionBDWebService extends AsyncTask<Void, Void, JSONObject> {
         }
         return json;
         }
+
         public conexionBDWebService(Context cont, String oper, String usr, int pes, int alt, String nacimiento, String sex){
             context=cont;
             operacion=oper;

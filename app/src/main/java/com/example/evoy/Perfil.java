@@ -13,17 +13,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,6 +25,8 @@ import org.json.simple.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
+
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 public class Perfil extends Fragment {
 
@@ -76,7 +72,9 @@ public class Perfil extends Fragment {
         JSONArray results = null;
 
         int[] idEvents = null;
+
         try {
+
             results = controladorBDWebService.getInstance().getProfileFeed(this.getActivity(), user);
             idEvents = controladorBDWebService.getInstance().getFollowed(getActivity(),"getFollowed",user);
 
@@ -85,6 +83,7 @@ public class Perfil extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         final int[] ids;
         final Bitmap[] imgs;
         final String[] names;
@@ -125,17 +124,21 @@ public class Perfil extends Fragment {
                 Bitmap img = BitmapFactory.decodeStream(stream);
                 imgs[i] = img;
                 int idEvent = Integer.valueOf((String) tmp.get("id"));
+
                 if(idEvents.equals(null)){
                     followed[i]=false;
                 }else {
+
                     if (esta(idEvents,idEvent)) {
                         followed[i] = true;
                     } else {
                         followed[i] = false;
                     }
+
                 }
             }
         } else {
+
             ids = new int[0];
             imgs = new Bitmap[0];
             names = new String[0];
@@ -145,6 +148,7 @@ public class Perfil extends Fragment {
             latitudes = new String[0];
             dates = new String[0];
         }
+
         MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,descriptions,dates,latitudes,longitudes,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
@@ -200,7 +204,7 @@ public class Perfil extends Fragment {
                 startActivity(i);
             }
         });
-
+        /**
         suscripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,7 +224,7 @@ public class Perfil extends Fragment {
                         });
                 // [END subscribe_topics]
             }
-        });
+        });**/
     }
 
     @Override

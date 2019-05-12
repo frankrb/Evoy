@@ -43,7 +43,6 @@ public class MyFeedFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public MyFeedFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -78,9 +77,11 @@ public class MyFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        // Inflate the layout para el fragment fragment
         View rootView = inflater.inflate(R.layout.fragment_my_feed, container, false);
         RecyclerView feed = rootView.findViewById(R.id.myRecycler2);
+        //obtenemos el nombre del usuario
         SharedPreferences prefs = this.getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String user = prefs.getString("user", "");
 
@@ -96,6 +97,7 @@ public class MyFeedFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
         final int[] ids;
         final Bitmap[] imgs;
         final String[] names;
@@ -136,17 +138,23 @@ public class MyFeedFragment extends Fragment {
                 Bitmap img = BitmapFactory.decodeStream(stream);
                 imgs[i] = img;
                 int idEvent = Integer.valueOf((String) tmp.get("id"));
+
                 if(idEvents.equals(null)){
+
                     followed[i]=false;
                 }else {
+
                     if (esta(idEvents,idEvent)) {
                         followed[i] = true;
+
                     } else {
                         followed[i] = false;
+
                     }
                 }
             }
         } else {
+
             ids = new int[0];
             imgs = new Bitmap[0];
             names = new String[0];
@@ -157,6 +165,7 @@ public class MyFeedFragment extends Fragment {
             dates = new String[0];
         }
 
+        //establecemos el fragment son sus valores correspondientes
         MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,descriptions,dates,latitudes,longitudes,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
@@ -166,28 +175,12 @@ public class MyFeedFragment extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
+
         if (mListener != null) {
+
             mListener.onFragmentInteraction(uri);
         }
     }
-
- /*   @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
 
     /**
      * This interface must be implemented by activities that contain this
@@ -204,7 +197,9 @@ public class MyFeedFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    //metodo que nos devuelve true o false si un evento se encuentra en una lista de eventos
     private boolean esta(int[] idEvents, int idEvent) {
+
         boolean esta = false;
         int i = 0;
         while(i<idEvents.length){

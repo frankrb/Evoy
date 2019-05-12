@@ -18,6 +18,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
+/**Clase para generar una conexión segura con el servidor**/
 public class GeneradorConexionesSeguras {
 
     private static GeneradorConexionesSeguras instancia;
@@ -34,6 +35,7 @@ public class GeneradorConexionesSeguras {
 
     public HttpsURLConnection crearConexionSegura (Context contexto, String direccion) {
         HttpsURLConnection urlConnection=null;
+
         try {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
 

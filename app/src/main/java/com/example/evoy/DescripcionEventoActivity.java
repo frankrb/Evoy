@@ -2,19 +2,16 @@ package com.example.evoy;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
+/**Actividad que muestra un evento con sus datos y descripciones**/
 public class DescripcionEventoActivity extends AppCompatActivity {
 
     TextView nombreEvento;
@@ -73,6 +70,7 @@ public class DescripcionEventoActivity extends AppCompatActivity {
         locationEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //muestra un mapa con la localización del evento
                 Intent mapa = new Intent(v.getContext(), ShowLocationActivity.class);
                 mapa.putExtra("location", location_evento);
                 mapa.putExtra("latitude", latitude_evento);

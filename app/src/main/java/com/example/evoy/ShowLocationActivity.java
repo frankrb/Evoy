@@ -12,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**Fragment que se encarga de mostrar la hubicación en un mapa de unas coordenadas dadas**/
 public class ShowLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -23,6 +24,7 @@ public class ShowLocationActivity extends FragmentActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_location);
         Intent intencion = getIntent();
+
         if (intencion.hasExtra("latitude") && intencion.hasExtra("longitude") && intencion.hasExtra("location")) {
 
             latitude = Double.parseDouble(intencion.getStringExtra("latitude"));

@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**clase para conectarse a la bbdd para gestrionar los distintos tipos de eventos(seguidos,todos,subidos)**/
 public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
 
     Context context;
@@ -32,15 +33,23 @@ public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
     }
 
     public ConexionBDEventos(Context cont, String oper, String user) {
+
         context=cont;
         username=user;
         operacion = oper;
+
         if(operacion.equals("getProfileFeed")) {
+
             direccion = "https://134.209.235.115/framos001/WEB/evoy/getProfileFeed.php";
+
         }else if(operacion.equals("getFollowsFeed")){
+
             direccion = "https://134.209.235.115/framos001/WEB/evoy/getFollowsFeed.php";
+
         }else{
+
             direccion = "https://134.209.235.115/framos001/WEB/evoy/allEvents.php";
+
         }
     }
 
@@ -50,6 +59,7 @@ public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
 
         HttpsURLConnection urlConnection = null;
         try {
+
             //establece una conexion HTTPS
             urlConnection = GeneradorConexionesSeguras.getInstance().crearConexionSegura(context, direccion);
 
@@ -68,11 +78,14 @@ public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
             int statusCode = urlConnection.getResponseCode();
             Log.d("StatusCode", String.valueOf(statusCode));
             if (statusCode == 200) {
+
                 //guardamos los resultados en el json
                 BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
                 String line, result = "";
+
                 while ((line = bufferedReader.readLine()) != null) {
+
                     result += line;
                 }
                 inputStream.close();
@@ -84,7 +97,6 @@ public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
 
                 inputStream.close();
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

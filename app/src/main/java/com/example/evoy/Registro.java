@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**Actividad que se encarga del registro de nuevos usuarios en la aplicación**/
 public class Registro extends AppCompatActivity {
     EditText user;
     EditText name;
@@ -32,6 +33,7 @@ public class Registro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_registro);
         user=findViewById(R.id.ruser);
         name=findViewById(R.id.rname);
@@ -45,15 +47,20 @@ public class Registro extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 boolean correcto = false;
+
                 if(datosOK(user.getText().toString().trim(),name.getText().toString().trim(), surname.getText().toString().trim(), pass.getText().toString().trim(), pass1.getText().toString().trim(), email.getText().toString().trim(), birth.getText().toString().trim())) {
+
                     try {
+                        //intentamos insertar usuarios en el servidor
                         correcto = controladorBDWebService.getInstance().insertarUsuario(getApplicationContext(),"insertarUsuario",user.getText().toString().trim(), name.getText().toString().trim(), surname.getText().toString().trim(), email.getText().toString().trim(), pass.getText().toString().trim(),birth.getText().toString().trim());
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     if (correcto) {
                         finish();
                     }
@@ -69,7 +76,9 @@ public class Registro extends AppCompatActivity {
         });
     }
 
+    //comprobamos los datos proporcionados por el usario
     public boolean datosOK(String user, String nombre, String apellidos, String contra, String contra1, String email, String fecha){
+
         boolean ok = false;
         Pattern usuario = Pattern.compile("[a-zA-Z0-9]{1,30}");
         Pattern nombre_apellido = Pattern.compile("[a-zA-Z]{1,30}");
@@ -150,9 +159,11 @@ public class Registro extends AppCompatActivity {
         return ok;
     }
 
+    //guardamos el estado de las instancias de la actividad
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+
         savedInstanceState.putString("nom", String.valueOf(name.getText()));
         savedInstanceState.putString("apell", String.valueOf(surname.getText()));
         savedInstanceState.putString("us", String.valueOf(user.getText()));
@@ -161,12 +172,13 @@ public class Registro extends AppCompatActivity {
         savedInstanceState.putString("cont2", String.valueOf(pass1.getText()));
         savedInstanceState.putString("fecha", String.valueOf(birth.getText()));
 
-
     }
 
+    //cargamos el estado de las instancias de la actividad
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+
         name.setText(savedInstanceState.getString("nom"));
         surname.setText(savedInstanceState.getString("apell"));
         user.setText(savedInstanceState.getString("us"));
@@ -177,7 +189,9 @@ public class Registro extends AppCompatActivity {
 
     }
 
+    //event picker que se encarga de elegir una fecha
     private void datePickerDialog(){
+
         Calendar calendario=Calendar.getInstance();
         int anyo=calendario.get(Calendar.YEAR);
         int mes=calendario.get(Calendar.MONTH);
