@@ -25,14 +25,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/advent_pro_light"
             android:text="TextView"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:typeface="sans"
             app:layout_constraintBottom_toTopOf="@+id/guideline18"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
-            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintHorizontal_bias="0.213"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
@@ -44,17 +44,17 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/advent_pro_light"
             android:text="TextView"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:typeface="sans"
             app:layout_constraintBottom_toTopOf="@+id/guideline17"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.172"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.941" />
 
         <TextView
             android:id="@+id/pemail"
@@ -64,17 +64,17 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/advent_pro_light"
             android:text="TextView"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:typeface="sans"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
-            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintHorizontal_bias="0.213"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline18"
-            app:layout_constraintVertical_bias="0.25" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/logoutBtn"
@@ -85,16 +85,15 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorPrimary"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/advent_pro_light"
             android:text="Logout"
             android:textColor="@color/white"
             android:typeface="sans"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline16"
-            app:layout_constraintTop_toTopOf="@+id/guideline18"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/guideline18" />
 
         <TextView
             android:id="@+id/pemail2"
@@ -104,7 +103,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/advent_pro_light"
             android:text="Mis Eventos"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
@@ -113,6 +112,7 @@
             android:typeface="sans"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline19"
             app:layout_constraintVertical_bias="0.0" />
@@ -122,28 +122,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="291dp" />
+            app:layout_constraintGuide_begin="258dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="55dp" />
+            app:layout_constraintGuide_begin="74dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="102dp" />
+            app:layout_constraintGuide_begin="128dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="168dp" />
+            app:layout_constraintGuide_begin="176dp" />
+
+        <Button
+            android:id="@+id/suscripcionR"
+            android:layout_width="111dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="@font/advent_pro_light"
+            android:text="Suscribirse"
+            android:textColor="@color/white"
+            android:typeface="sans"
+            app:layout_constraintBottom_toTopOf="@+id/guideline18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="@+id/guideline16"
+            app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
     </android.support.constraint.ConstraintLayout>
 

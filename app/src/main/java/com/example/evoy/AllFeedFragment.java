@@ -92,6 +92,7 @@ public class AllFeedFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        final int[] ids;
         final Bitmap[] imgs;
         final String[] names;
         final String[] locations;
@@ -103,6 +104,7 @@ public class AllFeedFragment extends Fragment {
 
         if (!results.equals(null)) {
 
+            ids = new int[results.size()];
             imgs = new Bitmap[results.size()];
             names = new String[results.size()];
             locations = new String[results.size()];
@@ -114,6 +116,7 @@ public class AllFeedFragment extends Fragment {
             for (int i = 0; i < results.size(); i++) {
 
                 JSONObject tmp = (JSONObject) results.get(i);
+                ids[i] = Integer.parseInt((String)tmp.get("id"));
                 names[i] = (String) tmp.get("name");
                 locations[i] = (String) tmp.get("location");
                 latitudes[i] = (String) tmp.get("latitude");

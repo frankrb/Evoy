@@ -12,11 +12,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.simple.JSONObject;
 
@@ -24,11 +30,14 @@ import java.util.concurrent.ExecutionException;
 
 public class Perfil extends Fragment {
 
+    private static final String TAG = "Perfil";
+
     TextView usuario;
     TextView nombreYapellidos;
     TextView email;
     FloatingActionButton addEventBtn;
     Button logout;
+    Button suscripcion;
 
     JSONObject datos;
 
@@ -84,6 +93,7 @@ public class Perfil extends Fragment {
         email = view.findViewById(R.id.pemail);
         addEventBtn = view.findViewById(R.id.addEventBtn);
         logout = view.findViewById(R.id.logoutBtn);
+        suscripcion = view.findViewById(R.id.suscripcionR);
 
         //obtenemos el nombre del usuario de sharedpreferences
         SharedPreferences sharedpreferences = getContext().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
@@ -118,6 +128,27 @@ public class Perfil extends Fragment {
                 eliminarPreferencias();
                 Intent i = new Intent(getContext(), Login.class);
                 startActivity(i);
+            }
+        });
+
+        suscripcion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Suscribiendose al servicio de recomendaciones");
+                // [START subscribe_topics]
+                FirebaseMessaging.getInstance().subscribeToTopic("recomendacion")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                String msg = "Suscrito al servicio de recomendaciones!";
+                                if (!task.isSuccessful()) {
+                                    msg = "Error al suscribirse al servicio de recomendaciones!";
+                                }
+                                Log.d(TAG, msg);
+                                Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                // [END subscribe_topics]
             }
         });
     }
