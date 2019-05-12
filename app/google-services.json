@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "29822329217",
+    "firebase_url": "https://evoy-3cd1e.firebaseio.com",
+    "project_id": "evoy-3cd1e",
+    "storage_bucket": "evoy-3cd1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29822329217:android:900ac3bc5ea61151",
+        "android_client_info": {
+          "package_name": "com.example.evoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29822329217-qnrb1jemogopsm300k7qmm3pr99l8nat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTT7gYovg8u43YDcVa5Cvg3G4Jo4fhkxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29822329217-qnrb1jemogopsm300k7qmm3pr99l8nat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

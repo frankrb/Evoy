@@ -11,14 +11,9 @@ import android.widget.TextView;
 
 public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private int[] ids;
     private String[] names;
-    private String[] details;
     private Bitmap[] imgs;
     private String[] locations;
-    private String[] dates;
-    private String[] creators;
-    private int[] followers;
 
     public MyCardViewAdapter(String[] nombres, Bitmap[] imagenes, String[] lugares) {
         //TODO establecer los elementos a mostrar
@@ -47,6 +42,8 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         name.setText(names[i]);
         location.setText(String.valueOf(locations[i]));
     }
+
+
 
     @Override
     public int getItemCount() {

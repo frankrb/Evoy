@@ -1,6 +1,7 @@
 package com.example.evoy;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView eventName;
     ImageView myImg;
     TextView location;
+    ConstraintLayout milayout;
 
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
