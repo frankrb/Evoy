@@ -49,6 +49,7 @@ public class MyCardViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
+
         ImageView img = myViewHolder.myImg;
         TextView name = myViewHolder.eventName;
         TextView location = myViewHolder.location;

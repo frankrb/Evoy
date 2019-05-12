@@ -1,5 +1,7 @@
 package com.example.evoy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -7,9 +9,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -70,21 +80,85 @@ public class MyFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_feed, container, false);
-
         RecyclerView feed = rootView.findViewById(R.id.myRecycler2);
-        //int[] imgs= {R.drawable.american,R.drawable.flixus,R.drawable.got,R.drawable.wire};
-        //Ejemplo TODO quitar cuando tengamos implementado hacerlo con servidor
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String user = prefs.getString("user", "");
 
-        Bitmap got = BitmapFactory.decodeResource(getResources(),
-                R.drawable.got);
-        Bitmap wire = BitmapFactory.decodeResource(getResources(),
-                R.drawable.wire);
-        Bitmap[] imgs = {got, wire};
-        String[] names = {"Game Of Thrones", "The Wire"};
-        String[] followers = {"23", "44"};
-        Boolean[] followed = {true,false};
-        int[] ids={0,1};
-        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, followers, followed, ids,getContext());
+        JSONArray results = null;
+
+        int[] idEvents = null;
+        try {
+            results = controladorBDWebService.getInstance().getFollowsFeed(this.getActivity(), user);
+            idEvents = controladorBDWebService.getInstance().getFollowed(getActivity(),"getFollowed",user);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        final int[] ids;
+        final Bitmap[] imgs;
+        final String[] names;
+        final String[] locations;
+        final String[] latitudes;
+        final String[] longitudes;
+        final String[] descriptions;
+        final String[] dates;
+
+        Boolean[] followed = null;
+
+        if (!results.equals(null)) {
+
+            ids = new int[results.size()];
+            imgs = new Bitmap[results.size()];
+            names = new String[results.size()];
+            locations = new String[results.size()];
+            followed = new Boolean[results.size()];
+
+            latitudes = new String[results.size()];
+            longitudes = new String[results.size()];
+            descriptions = new String[results.size()];
+            dates = new String[results.size()];
+
+            for (int i = 0; i < results.size(); i++) {
+
+                JSONObject tmp = (JSONObject) results.get(i);
+                ids[i] = Integer.parseInt((String)tmp.get("id"));
+                names[i] = (String) tmp.get("name");
+                locations[i] = (String) tmp.get("location");
+                latitudes[i] = (String) tmp.get("latitude");
+                longitudes[i] = (String) tmp.get("longitude");
+                descriptions[i] = (String) tmp.get("details");
+                dates[i] = (String) tmp.get("date");
+                String img64 = (String) tmp.get("image");
+                ids[i]= Integer.parseInt((String) tmp.get("id"));
+                InputStream stream = new ByteArrayInputStream(Base64.decode(img64.getBytes(), Base64.DEFAULT));
+                Bitmap img = BitmapFactory.decodeStream(stream);
+                imgs[i] = img;
+                int idEvent = Integer.valueOf((String) tmp.get("id"));
+                if(idEvents.equals(null)){
+                    followed[i]=false;
+                }else {
+                    if (esta(idEvents,idEvent)) {
+                        followed[i] = true;
+                    } else {
+                        followed[i] = false;
+                    }
+                }
+            }
+        } else {
+            ids = new int[0];
+            imgs = new Bitmap[0];
+            names = new String[0];
+            locations = new String[0];
+            descriptions = new String[0];
+            longitudes = new String[0];
+            latitudes = new String[0];
+            dates = new String[0];
+        }
+
+
+        MyCardViewAdapter myAdapter = new MyCardViewAdapter(names, imgs, locations, followed, ids,getContext());
         feed.setAdapter(myAdapter);
         LinearLayoutManager linearLayout = new LinearLayoutManager(getActivity());
         feed.setLayoutManager(linearLayout);
@@ -129,5 +203,18 @@ public class MyFeedFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private boolean esta(int[] idEvents, int idEvent) {
+        boolean esta = false;
+        int i = 0;
+        while(i<idEvents.length){
+            if (idEvents[i]==idEvent){
+                esta = true;
+                break;
+            }
+            i++;
+        }
+        return esta;
     }
 }

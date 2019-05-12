@@ -125,4 +125,14 @@ public class controladorBDWebService {
     public void stopFollow(Context context, String user, int idEvent) {
         new conexionBDWebService(context,"stopFollow",user,idEvent).execute();
     }
+
+    public JSONArray getProfileFeed(Context context, String user) throws ExecutionException, InterruptedException {
+        JSONArray json = new ConexionBDEventos(context, "getProfileFeed",user).execute().get();
+        return json;
+    }
+
+    public JSONArray getFollowsFeed(Context context, String user) throws ExecutionException, InterruptedException {
+        JSONArray json = new ConexionBDEventos(context, "getFollowsFeed",user).execute().get();
+        return json;
+    }
 }

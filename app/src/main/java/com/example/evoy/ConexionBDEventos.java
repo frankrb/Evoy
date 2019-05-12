@@ -18,14 +18,30 @@ import java.nio.charset.StandardCharsets;
 import javax.net.ssl.HttpsURLConnection;
 
 public class ConexionBDEventos extends AsyncTask<Void, Void, JSONArray> {
+
     Context context;
     String direccion;
     String username;
+    String operacion;
 
     public ConexionBDEventos(Context cont, String user) {
         context = cont;
         username = user;
+
         direccion = "https://134.209.235.115/framos001/WEB/evoy/allEvents.php";
+    }
+
+    public ConexionBDEventos(Context cont, String oper, String user) {
+        context=cont;
+        username=user;
+        operacion = oper;
+        if(operacion.equals("getProfileFeed")) {
+            direccion = "https://134.209.235.115/framos001/WEB/evoy/getProfileFeed.php";
+        }else if(operacion.equals("getFollowsFeed")){
+            direccion = "https://134.209.235.115/framos001/WEB/evoy/getFollowsFeed.php";
+        }else{
+            direccion = "https://134.209.235.115/framos001/WEB/evoy/allEvents.php";
+        }
     }
 
     @Override
